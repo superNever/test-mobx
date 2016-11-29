@@ -2,7 +2,21 @@ const path = require('path');
 const webpack = require('webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
+let env = process.env.WEBPACK_ENV;
+let plugins = [
+    new htmlWebpackPlugin({
+      template: './src/index.html',
+      filename: './index.html'
+    }),
+    new ExtractTextPlugin("[name][hash:8].css")
+]
+if(env==="build"){
+  plugins.push(new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('./dist/react-manifest.json'),
+      name:'react_library'
+  }));
+}
 module.exports = {
   entry: {
     index:'./src/index.js'
@@ -31,16 +45,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new htmlWebpackPlugin({
-      template: './src/index.html',
-      filename: './index.html'
-    }),
-    new webpack.DllReferencePlugin({
-          context: __dirname,
-          manifest: require('./dist/react-manifest.json'),
-          name:'react_library'
-    }),
-    new ExtractTextPlugin("[name][hash:8].css")
- ]
+  plugins:plugins
 };

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "pre:start":"./node_modules/.bin/webpack --config webpack.dll.js",
-    "start": "webpack-dev-server --inline --hot --content-base  dist/",
-    "build":"./node_modules/.bin/webpack",
+    "start": "set WEBPACK_ENV=dev&&webpack-dev-server --inline --hot --content-base  dist/",
+    "build":"set WEBPACK_ENV=build&&./node_modules/.bin/webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
