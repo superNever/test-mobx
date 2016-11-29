@@ -10,13 +10,27 @@ let plugins = [
     }),
     new ExtractTextPlugin("[name][hash:8].css")
 ]
-if(env==="build"){
-  plugins.push(new webpack.DllReferencePlugin({
-      context: __dirname,
-      manifest: require('./dist/react-manifest.json'),
-      name:'react_library'
-  }));
+
+if(env==="dev"){
+  plugins.push(
+    new webpack.DllReferencePlugin({
+        context: __dirname,
+        manifest: require('./dist/react-manifest.json'),
+        name:'react_library'
+    }))
+}else{
+    plugins.push(
+      new webpack.optimize.OccurrenceOrderPlugin,
+      new webpack.optimize.UglifyJsPlugin({
+        mangle:   true,
+        compress: {
+            warnings: false, // Suppress uglification warnings
+        },
+        except: ['exports', 'require']
+      })
+    )
 }
+console.log(plugins)
 module.exports = {
   entry: {
     index:'./src/index.js'
