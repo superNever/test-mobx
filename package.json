@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "pre:start":"./node_modules/.bin/webpack --config webpack.dll.js",
     "start": "webpack-dev-server --inline --hot --content-base  dist/",
     "build":"./node_modules/.bin/webpack",
     "test": "echo \"Error: no test specified\" && exit 1"

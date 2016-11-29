@@ -27,7 +27,6 @@ module.exports = {
       },
       {
         test: /\.less/,
-        include:[path.resolve(__dirname,'/src/')],
         loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
       }
     ]
@@ -36,6 +35,12 @@ module.exports = {
     new htmlWebpackPlugin({
       template: './src/index.html',
       filename: './index.html'
-    })
+    }),
+    new webpack.DllReferencePlugin({
+          context: __dirname,
+          manifest: require('./dist/react-manifest.json'),
+          name:'react_library'
+    }),
+    new ExtractTextPlugin("[name][hash:8].css")
  ]
 };

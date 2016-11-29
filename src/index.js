@@ -2,7 +2,7 @@ import {mobx,observable,computed} from 'mobx';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {observer} from 'mobx-react';
-
+import './index.less';
 class Todo {
     id = Math.random();
     @observable title;
